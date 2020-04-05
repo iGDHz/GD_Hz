@@ -177,7 +177,11 @@ void calculate(Postfix *p,stack*s)
 			{
 				case '+':push_data(s,a+b);break;
 				case '*':push_data(s,a*b);break;
-				case '/':push_data(s,a/b);break;
+				case '/':if(b == 0)
+				{
+					printf("·Ç·¨³ý0²Ù×÷!\n");
+					return ;
+				}push_data(s,a/b);break;
 				case '-':push_data(s,a-b);break;
 			}
 		}
