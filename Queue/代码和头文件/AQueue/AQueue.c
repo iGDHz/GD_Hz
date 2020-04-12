@@ -194,7 +194,7 @@ Status GetHeadAQueue(AQueue *Q, void *e)
 	if(IsEmptyAQueue(Q)) return FALSE;
 	switch(datatype[Q->front])//根据datatype找出对应元素的类型并输出 
 	{
-		case 'i':*(int*)e = *(int*)Q->data[Q->front];printf("队头元素：%d\n",*(int*)e);
+		case 'i':*(int*)e = *(int*)Q->data[Q->front];printf("队头元素：%d\n",*(int*)e);break;
 		case 'f':*(float*)e = *(float*)Q->data[Q->front];printf("队头元素：%f\n",*(float*)e);break;
 		case 'd':*(double*)e = *(double*)Q->data[Q->front];printf("队头元素：%lf\n",*(double*)e);break; 
 		case 'c':*(char*)e = *(char*)Q->data[Q->front];printf("队头元素：%c\n",*(char*)e);break;
@@ -227,6 +227,11 @@ Status EnAQueue(AQueue *Q, void *data)
 {
 	char d_type,temp;
 	int i,len;
+	if(!Q->data[0])
+	{
+		printf("队列未初始化！\n");
+		return FALSE;
+	}
 	if(IsFullAQueue(Q))
 	{
 		printf("队列已满！\n");

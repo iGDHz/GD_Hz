@@ -74,6 +74,10 @@ int main()
 				case 'a':InitLQueue(Q);break;//初始化队列 
 				case 'b':{//判断队列是否为空	
 					if(IsEmptyLQueue(Q)) printf("队列为空！\n");
+					else
+					{
+						printf("队列为空！(若未初始化请先初始化)\n");
+					}
 					break;
 				}
 				case 'c':{//获取头节点数据 

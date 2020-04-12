@@ -176,12 +176,10 @@ Status IsEmptyLQueue(const LQueue *Q)
 {
 	if(!Q->front || !Q->rear)
 	{
-		printf("队列未初始化！\n"); 
 		return FALSE;
 	} 
 	if(Q->length) 
 	{
-		printf("队列不为空！\n");
 		return FALSE;
 	}
 	return TRUE;

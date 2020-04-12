@@ -59,6 +59,7 @@ int main()
 	int flag;
 	char ch;
 	Q = (AQueue*)malloc(sizeof(AQueue));
+	Q->data[0] = NULL;
 	e = (void*)malloc(sizeof(void));
 	flag = 0;
 	InitAQueue(Q);
