@@ -88,7 +88,7 @@ Status get_data(void *e,char d_type)//数据输入（防滚键盘）
 	{
 		case 'i':for(i = (ch[0] == '-')?1:0;i<len;i++) if(ch[i]<'0' || ch[i]>'9') break;break;
 		case 'f':
-		case 'd':for(i=0;i<len;i++) if((ch[i]<'0' || ch[i]>'9') && ch[i]!='.') break;break;
+		case 'd':for(i = (ch[0] == '-')?1:0;i<len;i++) if((ch[i]<'0' || ch[i]>'9') && ch[i]!='.') break;break;
 		default:i = len;break;
 	}
 	type = d_type;
@@ -174,7 +174,16 @@ void DestoryLQueue(LQueue *Q)
  */
 Status IsEmptyLQueue(const LQueue *Q)
 {
-	if(Q->length) return FALSE;
+	if(!Q->front || !Q->rear)
+	{
+		printf("队列未初始化！\n"); 
+		return FALSE;
+	} 
+	if(Q->length) 
+	{
+		printf("队列不为空！\n");
+		return FALSE;
+	}
 	return TRUE;
 }
 
@@ -187,10 +196,17 @@ Status IsEmptyLQueue(const LQueue *Q)
  */
 Status GetHeadLQueue(LQueue *Q, void *e)
 {
-	if(IsEmptyLQueue(Q))
+	if(!Q->front || !Q->rear)
 	{
+		printf("队列未初始化！\n");
 		return FALSE;
 	}
+	if(IsEmptyLQueue(Q))
+	{
+		printf("队列为空！\n");
+		return FALSE;
+	}
+	
 	switch(type = datatype[data_head])
 	{
 		case 'i':type = 'i';*(int*)e = *(int*)Q->front->data;break;
@@ -228,7 +244,7 @@ Status EnLQueue(LQueue *Q, void *data)
 		printf("队列未初始化！\n");
 		return FALSE;
 	}
-	datatype[data_head] = type;
+	datatype[data_rear] = type;
 	if(!Q->length)//刚初始化时直接利用初始化的头节点继续赋值 
 	{
 		switch(type)
@@ -239,6 +255,7 @@ Status EnLQueue(LQueue *Q, void *data)
 			case 's':strcpy((char*)Q->front->data,(char*)data);break;
 		}
 		Q->length++; 
+		data_rear = (data_rear+1)%30;
 		return TRUE;
 	}
 	new_node = (Node*)malloc(sizeof(Node));
@@ -256,7 +273,7 @@ Status EnLQueue(LQueue *Q, void *data)
 		case 's':strcpy((char*)new_node->data,(char*)data);break;
 	}
 	new_node->next = NULL;//新节点后接空节点 
-	new_node = Q->rear->next;//新节点接于原队列的尾节点 
+	Q->rear->next = new_node;//新节点接于原队列的尾节点 
 	Q->rear = new_node;//尾节点重新设置
 	Q->length++; 
 	data_rear = (data_rear+1)%30;//数据类型尾位置向后移一位 
@@ -273,11 +290,21 @@ Status EnLQueue(LQueue *Q, void *data)
 Status DeLQueue(LQueue *Q)
 {
 	Node *free_Q;
-	if(IsEmptyLQueue(Q))
+	if(!Q->front || !Q->rear)
 	{
+		printf("队列未初始化！\n");
 		return FALSE;
 	}
-	if(Q->front == Q->rear) InitLQueue(Q);//只有一个节点时直接格式化 
+	if(IsEmptyLQueue(Q))
+	{
+		printf("队列为空！"); 
+		return FALSE;
+	}
+	if(Q->front == Q->rear) 
+	{
+		InitLQueue(Q);//只有一个节点时直接格式化 
+		return TRUE;
+	}
 	free_Q = Q->front;
 	Q->front = Q->front->next;
 	free(free_Q);
@@ -296,7 +323,7 @@ void ClearLQueue(LQueue *Q)
 {
 	if(!Q->length) return ;
 	DestoryLQueue(Q);
-	InitLQueue(Q);
+	InitLQueue(Q);//有一说一，我这个清空和初始化没区别，嘿嘿 
 }
 
 /**
@@ -312,12 +339,12 @@ Status TraverseLQueue(const LQueue *Q, void (*foo)(void *q))
 	int i;
 	if(!Q->front || !Q->rear)
 	{
-		printf("队列未初始化！");
+		printf("队列未初始化！\n");
 		return FALSE;
 	}
 	if(!Q->length)
 	{
-		printf("队列为空！");
+		printf("队列为空！\n");
 		return FALSE;
 	}
 	i = data_head;

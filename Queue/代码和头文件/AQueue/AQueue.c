@@ -39,10 +39,9 @@
  	system("cls");
  	printf("\t*****选择输入类型*****\n");
 	printf("|————     a.int型      ————|\n");
-	printf("|————     b.float型    ————|\n");
-	printf("|————    c.double型    ————|\n");
-	printf("|————     d.char型     ————|\n");
-	printf("|————e.string(20字符内)————|\n");
+	printf("|————    b.double型    ————|\n");
+	printf("|————     c.char型     ————|\n");
+	printf("|————d.string(20字符内)————|\n");
 	printf("请输入：");
  }
  
@@ -88,7 +87,7 @@ Status get_data(void *e,char d_type)//数据输入（防滚键盘）
 	{
 		case 'i':for(i = (ch[0] == '-')?1:0;i<len;i++) if(ch[i]<'0' || ch[i]>'9') break;break;
 		case 'f':
-		case 'd':for(i=0;i<len;i++) if((ch[i]<'0' || ch[i]>'9') && ch[i]!='.') break;break;
+		case 'd':for(i = (ch[0] == '-')?1:0;i<len;i++) if((ch[i]<'0' || ch[i]>'9') && ch[i]!='.') break;break;
 		default:i = len;break;
 	}
 	if(i!=len)
@@ -195,7 +194,7 @@ Status GetHeadAQueue(AQueue *Q, void *e)
 	if(IsEmptyAQueue(Q)) return FALSE;
 	switch(datatype[Q->front])//根据datatype找出对应元素的类型并输出 
 	{
-		case 'i':*(int*)e = *(int*)Q->data[Q->front];printf("队头元素：%d\n",*(int*)e);break;
+		case 'i':*(int*)e = *(int*)Q->data[Q->front];printf("队头元素：%d\n",*(int*)e);
 		case 'f':*(float*)e = *(float*)Q->data[Q->front];printf("队头元素：%f\n",*(float*)e);break;
 		case 'd':*(double*)e = *(double*)Q->data[Q->front];printf("队头元素：%lf\n",*(double*)e);break; 
 		case 'c':*(char*)e = *(char*)Q->data[Q->front];printf("队头元素：%c\n",*(char*)e);break;
@@ -237,27 +236,24 @@ Status EnAQueue(AQueue *Q, void *data)
 	choices();//输出类型选项 
 	switch((temp = getch('a','d')))//根据选项选择对应类型值 
 	{
-		case 'a':d_type = datatype[Q->rear] = 'i';break;//int 
-		case 'b':d_type = datatype[Q->rear] = 'f';break;//float
-		case 'c':d_type = datatype[Q->rear] = 'd';break;//double
-		case 'd':d_type = datatype[Q->rear] = 'c';break;//char
-		case 'e':d_type = datatype[Q->rear] = 's';break;//string
+		case 'a':d_type = datatype[Q->rear] = 'i';break;//int
+		case 'b':d_type = datatype[Q->rear] = 'd';break;//double
+		case 'c':d_type = datatype[Q->rear] = 'c';break;//char
+		case 'd':d_type = datatype[Q->rear] = 's';break;//string
 		default:printf("输入错误！\n");return FALSE;
 	}
 	printf("请输入数据：");
 	if(!get_data(data,d_type))
 	{
-		printf("输入类型错误！");
 		return FALSE;
 	}
 	Q->length++;
 	switch(temp)
 	{
 		case 'a':*(int*)Q->data[Q->rear] = *(int *)data;break;
-		case 'b':*(float*)Q->data[Q->rear] = *(float*)data;break;
-		case 'c':*(double*)Q->data[Q->rear] = *(double*)data;break;
-		case 'd':*(char*)Q->data[Q->rear] = *(char *)data;break;
-		case 'e':strcpy((char*)Q->data[Q->rear],(char*)data);break;
+		case 'b':*(double*)Q->data[Q->rear] = *(double*)data;break;
+		case 'c':*(char*)Q->data[Q->rear] = *(char *)data;break;
+		case 'd':strcpy((char*)Q->data[Q->rear],(char*)data);break;
 	}
 	Q->rear = (Q->rear+1)%MAXQUEUE;//循环队列 
 	return TRUE;
@@ -305,7 +301,7 @@ void ClearAQueue(AQueue *Q)
  *  @return      : None
  *  @notice      : None
  */
-Status TraverseAQueue(const AQueue *Q, void (*foo)(void *q,int i))
+Status TraverseAQueue(const AQueue *Q, void (*foo)(void *q))
 {
 	int i;
 	if(IsEmptyAQueue(Q))
@@ -315,7 +311,8 @@ Status TraverseAQueue(const AQueue *Q, void (*foo)(void *q,int i))
 	i = Q->front;
 	do
 	{
-		foo(Q->data[i],i);
+		type = datatype[i];
+		foo(Q->data[i]);
 		i = (i+1)%MAXQUEUE;
 	}while(i != Q->rear);
 	printf("\b\b\b    \n");//用空格将最后的“->”覆盖 
@@ -329,12 +326,11 @@ Status TraverseAQueue(const AQueue *Q, void (*foo)(void *q,int i))
  *  @param       : q 指针q
  *  @notice      : None
  */
-void APrint(void *q,int i)
+void APrint(void *q)
 {
-	switch(datatype[i])
+	switch(type)
 	{
 		case 'i':printf("%d -> ",*(int*)q);break;
-		case 'f':printf("%f -> ",*(float*)q);break;
 		case 'd':printf("%lf -> ",*(double*)q);break;
 		case 'c':printf("%c -> ",*(char*)q);break;
 		case 's':printf("%s -> ",(char*)q);break;

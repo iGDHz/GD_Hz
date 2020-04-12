@@ -146,7 +146,7 @@ void ClearAQueue(AQueue *Q);
  *    @return         : None
  *  @notice      : None
  */
-Status TraverseAQueue(const AQueue *Q, void (*foo)(void *q,int i));	
+Status TraverseAQueue(const AQueue *Q, void (*foo)(void *q));	
 
 
 
@@ -156,7 +156,7 @@ Status TraverseAQueue(const AQueue *Q, void (*foo)(void *q,int i));
  *    @param         q ÷∏’Îq
  *  @notice      : None
  */
-void APrint(void *q,int i);	
+void APrint(void *q);	
 
 /**************************************************************
  *    End-Multi-Include-Prevent Section

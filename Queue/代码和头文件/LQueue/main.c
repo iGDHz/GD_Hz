@@ -71,27 +71,30 @@ int main()
 			printf("你的选择：%c\n",ch);
 			switch(ch)
 			{
-				case 'a':InitLQueue(Q);break;
-				case 'b':{	
+				case 'a':InitLQueue(Q);break;//初始化队列 
+				case 'b':{//判断队列是否为空	
 					if(IsEmptyLQueue(Q)) printf("队列为空！\n");
-					else printf("队列不为空！\n");
 					break;
 				}
-				case 'c':{
+				case 'c':{//获取头节点数据 
 					if(GetHeadLQueue(Q,e)) 
 					{
 						printf("队头元素:");
 						LPrint(e);
 						printf("\n");
 					}
-					else printf("队列为空！\n");
 					break;
 				}
-				case 'd':{
+				case 'd':{//获取队列长度 
+					if(!Q->front || !Q->rear)
+					{
+						printf("队列未初始化！\n");
+						break;
+					}
 					printf("队列长度为%d\n",LengthLQueue(Q));
 					break;
 				}
-				case 'e':{
+				case 'e':{//入队 
 					choices();
 					switch(temp = getch('a','d'))
 					{
@@ -112,16 +115,16 @@ int main()
 					else printf("入队失败！\n");
 					break;
 				}
-				case 'f':{
+				case 'f':{//出队 
 					if(DeLQueue(Q)) printf("出队成功！\n");
-					else printf("队列为空！无法出队\n");
+					else printf("无法出队\n");
 					break;
 				}
-				case 'g':{
+				case 'g':{//清空队列 
 					ClearLQueue(Q);
 					break;
 				}
-				case 'h':{
+				case 'h':{//遍历队列 
 					TraverseLQueue(Q,LPrint);
 					break;
 				}
