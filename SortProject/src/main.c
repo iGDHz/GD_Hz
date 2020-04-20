@@ -3,6 +3,13 @@
 #include<string.h>
 #include"qgsort.c"
 #include<time.h>
+/**
+ *  @name:int get_data(int *e)
+ *	@description:»ñÈ¡ÕıÈ·Êı¾İ 
+ *	@param£ºe			
+ *	@return: int	
+ *  @notice:None
+ */
 int get_data(int *e)//Êı¾İÊäÈë£¨·À¹ö¼üÅÌ£© 
 {
 	char ch[30];
@@ -35,6 +42,13 @@ int get_data(int *e)//Êı¾İÊäÈë£¨·À¹ö¼üÅÌ£©
 	return 1;
  } 
  
+ /**
+ *  @name:char getch(char from,char to)
+ *	@description:»ñÈ¡ÕıÈ·ÊäÈëÑ¡Ïî 
+ *	@param:from,to			
+ *	@return:char	
+ *  @notice:None
+ */
 char getch(char from,char to)//ÓÃ»§Ñ¡ÔñÊäÈë£¨×Ö·û´®¶ÁÈ¡ºó·µ»ØÓĞĞ§Ñ¡Ôñ¹¦ÄÜ£¬·¶Î§´Ófromµ½to£© 
 {
 	char str[50];
@@ -47,6 +61,13 @@ char getch(char from,char to)//ÓÃ»§Ñ¡ÔñÊäÈë£¨×Ö·û´®¶ÁÈ¡ºó·µ»ØÓĞĞ§Ñ¡Ôñ¹¦ÄÜ£¬·¶Î§´
 	return str[len-1];//·ÃÎÊÍêÖ®ºó²éÕÒ²»µ½ÓĞĞ§Êı×ÖÖ±½Ó·µ»Ø×îºóÊı×Ö 
 }
 
+/**
+ *  @name:void data_choices()
+ *	@description:²âÊÔÊı¾İÑ¡Ïî 
+ *	@param£ºNone			
+ *	@return:None		
+ *  @notice:None
+ */
 void data_choices()//Êı¾İÑ¡Ôñ 
 {
 	printf("|¡ª¡ª¡ª¡ªa.´óÊı¾İ²âÊÔ£¨10000£©¡ª¡ª¡ª¡ª|\n");
@@ -56,6 +77,13 @@ void data_choices()//Êı¾İÑ¡Ôñ
 	printf("|¡ª¡ª¡ª¡ª¡ª¡ª  e.ÍË³ö   ¡ª¡ª¡ª¡ª¡ª¡ª¡ª|\n");
 }
 
+/**
+ *  @name:void tips()
+ *	@description:ÅÅĞòËã·¨Ñ¡Ôñ 
+ *	@param:None			
+ *	@return	:None	
+ *  @notice:None
+ */
 void tips()//ÅÅĞò·½Ê½Ñ¡Ôñ 
 {
 	printf("|¡ª¡ª¡ª¡ªa.²åÈëÅÅĞò¡ª¡ª¡ª¡ª|\n");
@@ -64,6 +92,14 @@ void tips()//ÅÅĞò·½Ê½Ñ¡Ôñ
 	printf("|¡ª¡ª¡ª¡ªd.»ùÊıÅÅĞò¡ª¡ª¡ª¡ª|\n");
 	printf("|¡ª¡ª¡ª¡ª  e.ÍË³ö  ¡ª¡ª¡ª¡ª|\n");
 }
+
+/**
+ *  @name:void get_array(int **big,int ***small,int col,int row)
+ *	@description: Êı×é³õÊ¼»¯ 
+ *	@param:big(´óÊı×é),small(´óÁ¿Ğ¡Êı×é),col£¨ÁĞ£©£¬row£¨ĞĞ£©		
+ *	@return:None	
+ *  @notice:None
+ */
 void get_array(int **big,int ***small,int col,int row)//Êı×é½¨Á¢ 
 {
 	int i;
@@ -74,6 +110,14 @@ void get_array(int **big,int ***small,int col,int row)//Êı×é½¨Á¢
 		for(i = 0; i < row ; i++) *((*small)+i)= (int*)malloc(sizeof(int)*col);
 	}
 }
+
+/**
+ *  @name:void function(char type)
+ *	@description:ÅÅĞòËã·¨Êı¾İÑ¡Ôñ²âÊÔ 
+ *	@param:type(Ëã·¨ÀàĞÍ) 
+ *	@return:None	
+ *  @notice:None
+ */
 void function(char type)
 {
 	int i,j,col,row,flag,*big,**little,*temp;
@@ -233,6 +277,7 @@ void function(char type)
 		} 
 	}	
 }
+
 int main()
 {
 	int flag;
