@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"buzz.obj" 
+TO "buzz" 
+RAMSIZE(256) 
